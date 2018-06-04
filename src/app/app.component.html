@@ -14,11 +14,15 @@
       <img *ngFor="let imgsrc of data[0].images" [src]="imgsrc" alt="" />
     </figure>
 
-    <button (click)="showAnswer()">ANSWER</button>
+    <div>
+      <input type="text" [(ngModel)]="answer" placeholder="答えを入力..." />
+      <button (click)="showAnswer()">ANSWER</button>
+    </div>
   </div>
 
   <div *ngIf="isAnswerShown" class="answer">
     <h1>正解は：{{data[0].title}}</h1>
+    <h1 [innerHtml]="compareAnswer(answer)"></h1>
     <h2>{{data[0].summary}}</h2>
     <p><a [href]="'https://ja.wikipedia.org/wiki/' + data[0].title" target="_blank" rel="nofollow noopener">詳しく知る</a></p>
     <button (click)="retry()">RETRY</button>

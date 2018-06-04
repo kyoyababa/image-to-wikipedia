@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
     'ばかり', 'まで', 'くらい',
     'ある', 'いる', 'なった', 'される', 'する', 'している',
     'あった', 'いた', 'なる', 'された', 'した', 'していた',
-    '(', ')', '（', '）', '、', '・', '。', ',', '.', '/', '-',
+    '(', ')', '（', '）', '、', '・', '。', ',', '.', '/', '-', 'ー', '＝', '=',
     '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
     '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'
   ];
@@ -43,6 +43,8 @@ export class AppComponent implements OnInit {
   public isPreparedGame: boolean = false;
   public isAnswerShown: boolean = false;
   public hint = '';
+
+  public answer: string = '';
 
   constructor() {}
 
@@ -88,11 +90,15 @@ export class AppComponent implements OnInit {
   }
 
   public startGame() {
-    this.data.sort((a,b) => {
+    this.data = this.data.filter((data) => data.images.length > 0);
+    this.data = this.data.sort((a,b) => {
       if (a.images.length > b.images.length) return -1;
       if (a.images.length < b.images.length) return 1;
       return 0;
     });
+    this.data = this.shuffle(this.data);
+
+    this.data[0].title = this.data[0].title.replace(/(曖昧さ回避)/g, '');
 
     this.isPreparedGame = true;
   }
@@ -139,6 +145,46 @@ export class AppComponent implements OnInit {
 
   public showAnswer() {
     this.isAnswerShown = true;
+  }
+
+  public compareAnswer(str: string) {
+    if (!str) return;
+
+    let res = '';
+    let tar = Math.max(str.length, this.data[0].title.length);
+
+    for (let i = 0; i < tar; i++) {
+      const cur = this.data[0].title[i];
+      const _cur = this.katakanaToHiragana(this.zenkakuToHankaku(cur));
+      const dif = this.answer[i];
+      if (typeof dif === 'undefined') {
+        res += `<span class="batsu"></span>`;
+      }
+      const _dif = this.katakanaToHiragana(this.zenkakuToHankaku(dif));
+
+      if (cur === dif) {
+        res += `<span class="maru">${cur}</span>`;
+      } else {
+        res += `<span class="batsu">${dif}</span>`;
+      }
+    }
+
+    return res;
+  }
+
+  private katakanaToHiragana(str: string) {
+    if (typeof str === 'undefined') return;
+    return str.replace(/[\u30a1-\u30f6]/g, (match) => {
+      let char = match.charCodeAt(0) - 0x60;
+      return String.fromCharCode(char);
+    });
+  }
+
+  private zenkakuToHankaku(str: string) {
+    if (typeof str === 'undefined') return;
+    return str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, (s) => {
+      return String.fromCharCode(s.charCodeAt(0) - 65248);
+    });
   }
 
   public retry() {
