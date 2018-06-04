@@ -1,0 +1,26 @@
+<div class="wrapper">
+  <div *ngIf="!isPreparedImages">LOADING</div>
+
+  <div *ngIf="isPreparedImages && !isPreparedGame" class="start">
+    <h1>画像とテキストの一部から、<br />ウィキペディアの何の記事か当てよう！</h1>
+    <button (click)="startGame()">START</button>
+  </div>
+
+  <div *ngIf="isPreparedGame" class="quiz">
+    <h1>{{generateHintText(data[0].title)}}</h1>
+    <h2>{{generateHintText(data[0].summary)}}</h2>
+
+    <figure>
+      <img *ngFor="let imgsrc of data[0].images" [src]="imgsrc" alt="" />
+    </figure>
+
+    <button (click)="showAnswer()">ANSWER</button>
+  </div>
+
+  <div *ngIf="isAnswerShown" class="answer">
+    <h1>正解は：{{data[0].title}}</h1>
+    <h2>{{data[0].summary}}</h2>
+    <p><a [href]="'https://ja.wikipedia.org/wiki/' + data[0].title" target="_blank" rel="nofollow noopener">詳しく知る</a></p>
+    <button (click)="retry()">RETRY</button>
+  </div>
+</div>

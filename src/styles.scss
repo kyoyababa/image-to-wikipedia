@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  background: none;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+input {
+  height: 1.75em;
+  padding: 2px 6px 0;
+  border-bottom: 4px solid #CCC;
+  background-color: #FAFAFA;
+  font-size: 24px;
+  transition: border-bottom-color 300ms ease-in;
+
+  &:focus {
+    border-bottom-color: skyblue;
+  }
+}
+
+button {
+  padding: 4px 8px;
+  background-color: #FFFFFF;
+  border: 2px solid #CCCCCC;
+  font-size: 28px;
+  transition: background-color 300ms ease-in;
+
+  &:hover {
+    background-color: #CCCCCC;
+  }
+}

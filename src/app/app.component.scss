@@ -1,0 +1,62 @@
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  padding: 40px;
+}
+
+h1 {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #888888;
+}
+
+.quiz {
+  figure {
+    overflow: auto;
+    width: calc(100vw - 40px - 40px);
+    margin: 20px 0;
+    white-space: nowrap;
+  }
+
+  img {
+    max-height: 30vh;
+    border: 2px solid blue;
+  }
+
+  img + img {
+    margin-left: 20px;
+  }
+
+  button {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.answer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0, 0.75);
+  color: #FFF;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 40px;
+  text-shadow: 0 0 5px #000;
+
+  p {
+    margin: 20px 0;
+
+    a {
+      color: skyblue;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}
